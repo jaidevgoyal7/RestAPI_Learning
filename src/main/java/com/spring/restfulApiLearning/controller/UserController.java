@@ -1,6 +1,8 @@
 package com.spring.restfulApiLearning.controller;
 
+import com.spring.restfulApiLearning.dto.UserDto;
 import com.spring.restfulApiLearning.entity.User;
+import com.spring.restfulApiLearning.mapper.UserMapper;
 import com.spring.restfulApiLearning.service.UserService;
 import lombok.AllArgsConstructor;
 import org.apache.coyote.Response;
@@ -16,31 +18,30 @@ import java.util.List;
 @RequestMapping("api/users")
 public class UserController {
 
-    @Autowired
     private UserService userService;
 
     @PostMapping
-    public ResponseEntity<User> createUser(@RequestBody User user){
-        User savedUser = userService.createUser(user);
-        return new ResponseEntity<>(savedUser, HttpStatus.CREATED);
+    public ResponseEntity<UserDto> createUser(@RequestBody UserDto user){
+        UserDto savedUserDto = userService.createUser(user);
+        return new ResponseEntity<>(savedUserDto, HttpStatus.CREATED);
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<User> getUserById(@PathVariable Long id){
-        User userById = userService.getUserById(id);
-        return new ResponseEntity<>(userById, HttpStatus.OK);
+    public ResponseEntity<UserDto> getUserById(@PathVariable Long id){
+        UserDto userDtoById = userService.getUserById(id);
+        return new ResponseEntity<>(userDtoById, HttpStatus.OK);
     }
 
     @GetMapping
-    public ResponseEntity<List<User>> getAllUsers(){
-        List<User> allUsers = userService.getAllUsers();
+    public ResponseEntity<List<UserDto>> getAllUsers(){
+        List<UserDto> allUsers = userService.getAllUsers();
         return new ResponseEntity<>(allUsers, HttpStatus.OK);
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<User> updateUser(@PathVariable Long id, @RequestBody User user){
+    public ResponseEntity<UserDto> updateUser(@PathVariable Long id, @RequestBody UserDto user){
         user.setId(id);
-        User updatedUser = userService.updateUser(user);
+        UserDto updatedUser = userService.updateUser(user);
         return new ResponseEntity<>(updatedUser, HttpStatus.OK);
     }
 
