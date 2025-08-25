@@ -4,6 +4,7 @@ import com.spring.restfulApiLearning.dto.UserDto;
 import com.spring.restfulApiLearning.entity.User;
 import com.spring.restfulApiLearning.mapper.UserMapper;
 import com.spring.restfulApiLearning.service.UserService;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +22,7 @@ public class UserController {
     private UserService userService;
 
     @PostMapping
-    public ResponseEntity<UserDto> createUser(@RequestBody UserDto user){
+    public ResponseEntity<UserDto> createUser(@Valid @RequestBody UserDto user){
         UserDto savedUserDto = userService.createUser(user);
         return new ResponseEntity<>(savedUserDto, HttpStatus.CREATED);
     }
@@ -39,7 +40,7 @@ public class UserController {
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<UserDto> updateUser(@PathVariable Long id, @RequestBody UserDto user){
+    public ResponseEntity<UserDto> updateUser(@Valid @PathVariable Long id, @RequestBody UserDto user){
         user.setId(id);
         UserDto updatedUser = userService.updateUser(user);
         return new ResponseEntity<>(updatedUser, HttpStatus.OK);
